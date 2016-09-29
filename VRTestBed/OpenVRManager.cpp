@@ -58,11 +58,48 @@ void OpenVRManager::shutdown()
 	m_pResources = nullptr;
 }
 
+static Matrix HmdMatrix34ToMatrix(const vr::HmdMatrix34_t &hmdMat)
+{
+	Matrix mResult;
+	for (uint32_t i = 0; i < 4; i++)
+	{
+		for (uint32_t j = 0; j < 3; j++)
+		{
+			mResult.m[i][j] = hmdMat.m[j][i];
+		}
+	}
+	return mResult;
+}
+
+static Matrix HmdMatrix44ToMatrix(const vr::HmdMatrix44_t &hmdMat)
+{
+	Matrix mResult;
+	for (uint32_t i = 0; i < 4; i++)
+	{
+		for (uint32_t j = 0; j < 4; j++)
+		{
+			mResult.m[i][j] = hmdMat.m[j][i];
+		}
+	}
+	return mResult;
+}
+
 void OpenVRManager::beginFrame()
 {
 	m_pComp->WaitGetPoses(&m_RenderPose[0], vr::k_unMaxTrackedDeviceCount, nullptr, 0);
-	m_mProj[vr::Eye_Left] = m_pVRSystem->GetProjectionMatrix(vr::Eye_Left, 0.3f, 100.f, vr::API_DirectX);
-	m_mProj[vr::Eye_Right] = m_pVRSystem->GetProjectionMatrix(vr::Eye_Right, 0.3f, 100.f, vr::API_DirectX);
+	
+	for (uint32_t dwEye = 0; dwEye < 2; dwEye++)
+	{
+		const vr::EVREye eEye = (vr::EVREye)dwEye;
+
+		Matrix mRenderPose = HmdMatrix34ToMatrix(m_RenderPose[0].mDeviceToAbsoluteTracking);
+		Matrix mEyeToHead = HmdMatrix34ToMatrix(m_pVRSystem->GetEyeToHeadTransform(eEye));
+		Matrix mEyeToPose = mEyeToHead * mRenderPose * m_mCameraBase;
+		m_mInvView[dwEye] = mEyeToPose;
+		m_mView[dwEye] = mEyeToPose.Invert();
+		m_mProj[dwEye] = HmdMatrix44ToMatrix(m_pVRSystem->GetProjectionMatrix(eEye, 0.3f, 100.f, vr::API_DirectX));
+		m_mViewProj[dwEye] = m_mView[dwEye] * m_mProj[dwEye];
+	}
 }
 
 void OpenVRManager::endFrame()

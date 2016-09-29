@@ -17,6 +17,16 @@
 #include <wrl/client.h>
 
 #include <openvr.h>
-#include <glm/glm.hpp>
+
+// DirectX Utilities
+#include <DirectXHelpers.h>
+#include <Effects.h>
+#include <Model.h>
+#include <WICTextureLoader.h>
+#include <DDSTextureLoader.h>
+#include <DirectXMath.h>
+#include <SimpleMath.h>
+#include <DirectXTex/DirectXTex.h>
 
 using Microsoft::WRL::ComPtr;
+using namespace DirectX::SimpleMath;

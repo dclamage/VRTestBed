@@ -1,6 +1,15 @@
 [submodule "OpenVR"]
 	path = OpenVR
 	url = https://github.com/ValveSoftware/openvr.git
-[submodule "GLM"]
-	path = GLM
-	url = https://github.com/g-truc/glm.git
+[submodule "DirectXTK"]
+	path = DirectXTK
+	url = https://github.com/Microsoft/DirectXTK.git
+[submodule "DirectXTex"]
+	path = DirectXTex
+	url = https://github.com/Microsoft/DirectXTex.git
+[submodule "DirectXMesh"]
+	path = DirectXMesh
+	url = https://github.com/Microsoft/DirectXMesh.git
+[submodule "DirectXMath"]
+	path = DirectXMath
+	url = https://github.com/Microsoft/DirectXMath.git

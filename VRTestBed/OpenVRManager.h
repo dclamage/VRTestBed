@@ -22,6 +22,14 @@ public:
 	uint32_t eyeHeight() const { return m_dwEyeHeight; }
 	int32_t adpaterIndex() const { return m_dwAdapaterIndex; }
 
+	const Matrix &cameraBase(uint32_t dwEye) const { return m_mCameraBase; }
+	void setCameraBase(Matrix &cameraBase) { m_mCameraBase = cameraBase; }
+
+	const Matrix &invView(uint32_t dwEye) const { return m_mInvView[dwEye]; }
+	const Matrix &view(uint32_t dwEye) const { return m_mView[dwEye]; }
+	const Matrix &proj(uint32_t dwEye) const { return m_mProj[dwEye]; }
+	const Matrix &viewProj(uint32_t dwEye) const { return m_mViewProj[dwEye]; }
+
 private:
 	OpenVRManager();
 
@@ -34,5 +42,10 @@ private:
 	int32_t m_dwAdapaterIndex;
 
 	vr::TrackedDevicePose_t m_RenderPose[vr::k_unMaxTrackedDeviceCount];
-	vr::HmdMatrix44_t m_mProj[2];
+
+	Matrix m_mCameraBase;
+	Matrix m_mInvView[2];
+	Matrix m_mView[2];
+	Matrix m_mProj[2];
+	Matrix m_mViewProj[2];
 };
