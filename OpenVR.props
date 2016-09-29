@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup>
+    <Link>
+      <AdditionalLibraryDirectories Condition="$(Platform)=='Win32'">$(MSBuildThisFileDirectory)OpenVR\lib\win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="$(Platform)=='x64'">$(MSBuildThisFileDirectory)OpenVR\lib\win64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>openvr_api.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(MSBuildThisFileDirectory)OpenVR\headers</AdditionalIncludeDirectories>
+    </ClCompile>
+    <PostBuildEvent>
+      <Command Condition="$(Platform)=='Win32'">copy $(MSBuildThisFileDirectory)OpenVR\bin\win32\openvr_api.dll $(OutputPath)openvr_api.dll</Command>
+	  <Command Condition="$(Platform)=='x64'">copy $(MSBuildThisFileDirectory)OpenVR\bin\win64\openvr_api.dll $(OutputPath)openvr_api.dll</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup />
+</Project>
