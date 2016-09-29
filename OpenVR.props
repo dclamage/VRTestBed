@@ -10,7 +10,7 @@
       <AdditionalDependencies>openvr_api.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(MSBuildThisFileDirectory)OpenVR\headers</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(MSBuildThisFileDirectory)OpenVR\headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <PostBuildEvent>
       <Command Condition="$(Platform)=='Win32'">copy $(MSBuildThisFileDirectory)OpenVR\bin\win32\openvr_api.dll $(OutputPath)openvr_api.dll</Command>
